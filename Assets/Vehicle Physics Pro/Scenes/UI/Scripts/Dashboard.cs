@@ -31,10 +31,9 @@ public class Dashboard : MonoBehaviour
 	GameObject directionSignLeft;
 	Vector3 directionPos;
 	// Harry: 
-	// For sound to vibration experiment
-	// public AudioSource audioSource;
-    // public AudioClip clip;
-    // public float volume=1.0f;
+	public AudioSource audioSource;
+    public AudioClip clip; // Use alertSoundVibration audio asset for "sound to vibration" experiment
+    //public float volume=1.0f;
 	
 	
 
@@ -199,6 +198,7 @@ public class Dashboard : MonoBehaviour
 						directionSignLeft.transform.Rotate(new Vector3(0, 90, 0));
 						// Play sound to vibration experiment
 						//audioSource.PlayOneShot(clip, volume);
+						audioSource.Play();
 					}
 				}
 				else if (detector.GetSuggestedDirection() == detector.rightDirection) 
@@ -214,6 +214,7 @@ public class Dashboard : MonoBehaviour
 						directionPos = new Vector3(directionPos.x, directionPos.y+1.5f, directionPos.z+10.0f);
 						directionSignRight = Instantiate(arrow, directionPos, heroCar.transform.rotation, heroCar.transform);
 						directionSignRight.transform.Rotate(new Vector3(180, 90, 0));
+						audioSource.Play();
 					}
 				}
 				SetEnabled(laneChangeAlertLabel.gameObject, true);
@@ -224,7 +225,7 @@ public class Dashboard : MonoBehaviour
 			{
 				// Dismiss arrow when out of warning area
 				SetEnabled(laneChangeAlertLabel.gameObject, false);
-				//audioSource.Stop();
+				audioSource.Stop();
 				
 				if (directionSignLeft)
 				{

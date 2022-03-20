@@ -1,9 +1,9 @@
-// Detect Obstacle: detect current and target car's distance 
+// Harry:
+// Detect Obstacle: detect if the blocking car ahead of my car 
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 
 namespace VehicleObstacleDetect{
@@ -47,19 +47,20 @@ namespace VehicleObstacleDetect{
           
             if (Physics.Raycast(heroCar.transform.position, heroCar.transform.forward * 30, out hitInfo, 30)) 
             {
-                 
+                 // Only instersts in object tagging with BlockingCar
                  if (hitInfo.collider.gameObject.CompareTag("BlockingCar")) 
                  {
+                    // Intentionally use ebug dray ray to better visualize car's intersection
                     Debug.DrawRay(myCar.position, myCar.forward * 30, Color.red);
                     Debug.Log(hitInfo.normal.x);
                     if (hitInfo.normal.x < 0)
                     {
-                        // suggest to turn left
+                        // Suggest to turn left
                         _directionToTurn = leftDirection;
                     }
                     else
                     {
-                        // suggest to turn right
+                        // Suggest to turn right
                         _directionToTurn = rightDirection;
                     }
                     _isObstacleDetected = true;
@@ -73,19 +74,28 @@ namespace VehicleObstacleDetect{
 
 
         // public member functions
+        
+        // Get obstacle detection status
+        // Returns: 
+        //     bool true: obstacle detected
+        //     bool false: obstable not detected 
         public bool GetDetectStatus() 
         {
             return _isObstacleDetected;
         }
 
+        // Get suggested direction when detecting obstacle
+        // Returns: 
+        //     int 1: direction to left
+        //     int -1: direction to right 
         public int GetSuggestedDirection() 
         {
             return _directionToTurn;
         }
 
-        //////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////
         // Ways to detect obstacle - #3: RaycastHit using raycast to detect hit info
-        //////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////
         
         // private void ScanObstacle(Transform myCar)
         // {
@@ -107,9 +117,9 @@ namespace VehicleObstacleDetect{
         //     }
         // }
 
-        //////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////
         // Ways to detect obstacle - #2: OverlapSphere using radius with collider
-        //////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////
         // private void ScanObstacle(Transform myCar, int radius)
         // {
         //     // Setup collider
@@ -126,9 +136,9 @@ namespace VehicleObstacleDetect{
         //  }
 
 
-        //////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////
         // Ways to detect obstacle - #1: Vector3 distance (not so good way)
-        //////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////
         // private void ScanObstacle()
         // {
         //     distanceToObstacle = Vector3.Distance(heroCar.transform.position, blockingCar.transform.position);
